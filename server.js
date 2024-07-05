@@ -11,7 +11,18 @@ app.use(bodyParser.json());
 
 // test endpoint
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('Luckbox_backend!');
+});
+
+app.get('/api', (req, res) => {
+    res.send('No API yet!');
+});
+
+app.get('/ws/debug', (req, res) => {
+    res.send({
+        clients: wss.clients.size,
+        positions: playerPositions
+    });
 });
 
 // In-memory storage for player positions
@@ -58,6 +69,10 @@ wss.on('connection', (ws) => {
     ws.on('close', () => {
         delete playerPositions[ws.id];
         console.log('Client disconnected');
+    });
+
+    ws.on('error', (error) => {
+        console.error(`WebSocket error: ${error}`);
     });
 });
 
