@@ -4,7 +4,7 @@ const http = require('http');
 const WebSocket = require('ws');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware to parse JSON payloads
 app.use(bodyParser.json());
